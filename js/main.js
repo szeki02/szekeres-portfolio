@@ -517,23 +517,33 @@ function initCubeMenu() {
 function initLens() {
   if (!finePointer) return;
   $$('.lens').forEach((fig) => {
-    const img = $('img', fig);
     const zoom = parseFloat(fig.dataset.zoom || 2.4);
     const glass = document.createElement('div');
     glass.className = 'lens__glass';
     fig.appendChild(glass);
     const R = 110;
-    fig.addEventListener('pointerenter', () => { glass.style.backgroundImage = `url(${img.currentSrc || img.src})`; });
+    let src = '';
     fig.addEventListener('pointermove', (e) => {
+      // the newest picture (the programme viewer stacks a fresh one on each switch)
+      const imgs = $$('img', fig);
+      const img = imgs[imgs.length - 1];
+      if (!img || !img.naturalWidth) return;
+      const s = img.currentSrc || img.src;
+      if (s !== src) { src = s; glass.style.backgroundImage = `url(${s})`; }
+      // renders sit cropped (object-fit: cover) in a masked frame: map the pointer onto the
+      // picture as drawn, and only magnify inside the part that is actually visible
       const ir = img.getBoundingClientRect();
+      const vr = (img.closest('.img-mask, .program__view') || img).getBoundingClientRect();
       const fr = fig.getBoundingClientRect();
-      const x = e.clientX - ir.left, y = e.clientY - ir.top;
-      const inside = x >= 0 && y >= 0 && x <= ir.width && y <= ir.height;
+      const inside = e.clientX >= vr.left && e.clientX <= vr.right && e.clientY >= vr.top && e.clientY <= vr.bottom;
       fig.classList.toggle('is-on', inside);
       if (!inside) return;
+      const k = getComputedStyle(img).objectFit === 'cover' ? Math.max(ir.width / img.naturalWidth, ir.height / img.naturalHeight) : 0;
+      const cw = k ? img.naturalWidth * k : ir.width, ch = k ? img.naturalHeight * k : ir.height;
+      const x = e.clientX - ir.left - (ir.width - cw) / 2, y = e.clientY - ir.top - (ir.height - ch) / 2;
       glass.style.left = `${e.clientX - fr.left - R}px`;
       glass.style.top = `${e.clientY - fr.top - R}px`;
-      glass.style.backgroundSize = `${ir.width * zoom}px ${ir.height * zoom}px`;
+      glass.style.backgroundSize = `${cw * zoom}px ${ch * zoom}px`;
       glass.style.backgroundPosition = `${-(x * zoom - R)}px ${-(y * zoom - R)}px`;
     });
     fig.addEventListener('pointerleave', () => fig.classList.remove('is-on'));
