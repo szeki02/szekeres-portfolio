@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dávid Szekeres</title>
+  <meta name="description" content="Portfolio of Dávid László Szekeres, architecture student at MOME Budapest, formerly UIC Barcelona: built work in Cameroon, competitions, landscape and parametric design.">
+  <meta property="og:title" content="Dávid Szekeres · Designer // Architect">
+  <meta property="og:image" content="assets/img/cover.jpg">
+  <meta name="theme-color" content="#0e0e0e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Silkscreen&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual';</script>
+  <script type="importmap">
+    { "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body class="is-loading">
+
+  <!-- ============ LOADER ============ -->
+  <div class="loader" aria-hidden="true">
+    <span class="mark mark--tl"></span><span class="mark mark--tr"></span>
+    <span class="mark mark--bl"></span><span class="mark mark--br"></span>
+    <div class="loader__center">
+      <div class="loader__count"><span class="loader__num">000</span><span class="loader__pct">%</span></div>
+      <div class="loader__bar"><span></span></div>
+      <div class="loader__log">
+        <span>// INITIALISING G.R.I.D.</span>
+        <span class="loader__status">LOADING MODULES</span>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="cursor" aria-hidden="true">
+    <span class="cursor__dot"></span>
+    <span class="cursor__ring"><span class="cursor__label"></span></span>
+  </div>
+
+  <!-- ============ HUD ============ -->
+  <header class="hud hud--top">
+    <a href="#top" class="hud__logo" data-cursor="top" aria-label="Back to top">
+      <span class="logo-block"></span><span class="logo-txt">D.L.S</span>
+    </a>
+    <div class="hud__chapter" aria-live="polite">
+      <span class="hud__chapter-num">00</span>
+      <span class="hud__chapter-sep">//</span>
+      <span class="hud__chapter-name">INDEX</span>
+    </div>
+    <nav class="hud__nav">
+      <a href="#work" class="magnetic">Work</a>
+      <a href="#about" class="magnetic">About</a>
+      <a href="#experience" class="magnetic">Experience</a>
+      <a href="#contact" class="magnetic">Contact</a>
+    </nav>
+    <button class="hud__menu" aria-label="Open menu"><span></span><span></span></button>
+  </header>
+
+  <div class="hud hud--bottom">
+    <div class="hud__coords"><span class="hud__label">LOC</span> <span class="hud__coords-val">47.4979° N 19.0402° E</span></div>
+    <div class="hud__progress"><span class="hud__progress-fill"></span></div>
+    <div class="hud__clock"><span class="hud__label">BCN</span> <span class="clock" data-tz="Europe/Madrid">--:--</span> <span class="hud__label">BUD</span> <span class="clock" data-tz="Europe/Budapest">--:--</span></div>
+  </div>
+
+  <div class="menu-overlay">
+    <a href="#work">Work</a><a href="#about">About</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+  </div>
+
+  <!-- ============ INDEX: labels for the disassembled hero cube, one piece each ============ -->
+  <nav class="cube-menu" id="work" aria-label="Selected works">
+    <p class="cube-menu__head px">SELECTED WORKS (07) · PICK A PIECE</p>
+    <a class="cm-item" href="#about" data-preview="assets/img/portrait.jpg" data-cursor="view"><span class="cm-num px">00</span><span class="cm-txt"><span class="cm-name">About me</span><span class="cm-cat">Background · Studios</span></span></a>
+    <a class="cm-item" href="#cameroon" data-preview="assets/img/cam-pavilion.jpg" data-cursor="view"><span class="cm-num px">01</span><span class="cm-txt"><span class="cm-name">Cameroon École</span><span class="cm-cat">Built pavilion · School complex · 2025</span></span></a>
+    <a class="cm-item" href="#garden" data-preview="assets/img/garden-hero.jpg" data-cursor="view"><span class="cm-num px">02</span><span class="cm-txt"><span class="cm-name">Garden Building</span><span class="cm-cat">Landscape · Construction · 2026</span></span></a>
+    <a class="cm-item" href="#studio4" data-preview="assets/img/ds4-hero.jpg" data-cursor="view"><span class="cm-num px">03</span><span class="cm-txt"><span class="cm-name">Design Studio IV</span><span class="cm-cat">Canoeing club, Zaragoza · 2025</span></span></a>
+    <a class="cm-item" href="#helsinki" data-preview="assets/img/hel-aerial.jpg" data-cursor="view"><span class="cm-num px">04</span><span class="cm-txt"><span class="cm-name">Helsinki ADM</span><span class="cm-cat">Competition · CAN Architects · 2024</span></span></a>
+    <a class="cm-item" href="#roviras" data-preview="assets/img/rc-planas-poster.jpg" data-cursor="view"><span class="cm-num px">05</span><span class="cm-txt"><span class="cm-name">Roviras Castelao</span><span class="cm-cat">Internship · Graphic design · 2023–25</span></span></a>
+    <a class="cm-item" href="#studio3" data-preview="assets/img/ds3-hero.jpg" data-cursor="view"><span class="cm-num px">06</span><span class="cm-txt"><span class="cm-name">Design Studio III</span><span class="cm-cat">Library, Nou Barris · 2024</span></span></a>
+    <a class="cm-item" href="#grid" data-preview="assets/img/grid-hero.jpg" data-cursor="view"><span class="cm-num px">07</span><span class="cm-txt"><span class="cm-name">GRID 808</span><span class="cm-cat">Art · Architecture · 2025</span></span></a>
+  </nav>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top" data-chapter="00" data-name="INDEX" data-coords="47.4979° N 19.0402° E">
+      <span class="mark mark--tl"></span><span class="mark mark--tr"></span>
+      <span class="mark mark--bl"></span><span class="mark mark--br"></span>
+
+      <div class="hero__name">
+        <h1 class="hero__title">
+          <span class="line"><span class="hero__word" data-hero-split>DÁVID</span></span>
+          <span class="line"><span class="hero__word hero__word--indent" data-hero-split>LÁSZLÓ</span></span>
+          <span class="line"><span class="hero__word" data-hero-split>SZEKERES</span></span>
+        </h1>
+        <p class="hero__role"><span class="px">DESIGNER</span> <span class="slashes">//</span> <span class="px">ARCHITECT</span></p>
+      </div>
+
+      <div class="hero__side">
+        <span class="hero__vertical">PORTFOLIO</span>
+        <span class="hero__years">2023–2026</span>
+        <ul class="hero__ticks" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+      </div>
+
+      <div class="hero__brief">
+        <p>Architecture student at <strong>MOME</strong> in Budapest, after three years at <strong>UIC Barcelona</strong>. Built work in Cameroon, competitions in Helsinki and Zaragoza, gardens by hand.</p>
+      </div>
+
+      <div class="hero__hint">
+        <span class="px">[ DRAG · CLICK · SCROLL ]</span>
+        <span class="hero__hint-line"></span>
+        <span class="hero__hint-txt">Scroll to disassemble</span>
+      </div>
+
+      <div class="hero__contact">
+        <span class="px">Contact</span>
+        <a href="https://instagram.com/_szekiro_" target="_blank" rel="noopener">@_szekiro_</a>
+        <a href="mailto:szekeres.david04@gmail.com">szekeres.david04@gmail.com</a>
+        <a href="tel:+36706056886">T. +36 70 605 6886</a>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="about theme-paper" id="about" data-chapter="—" data-name="ABOUT ME" data-coords="47.4979° N 19.0402° E">
+      <div class="wrap">
+        <div class="section-tag"><span class="sq"></span>ABOUT ME</div>
+        <p class="about__statement" data-scrub-text>
+          I find it fulfilling to find solutions for intricate problems, and to document them so completely that a project can be understood in all its complexity.
+        </p>
+
+        <div class="about__grid">
+          <figure class="about__portrait" data-clip>
+            <img src="assets/img/portrait.jpg" alt="Portrait of Dávid Szekeres" loading="lazy" decoding="async">
+            <figcaption class="px">FIG. 00 · THE AUTHOR</figcaption>
+          </figure>
+
+          <div class="about__text">
+            <p data-reveal>My name is Dávid László Szekeres. I am from Budapest, Hungary, where I am currently studying architecture at MOME, the Moholy-Nagy University of Art and Design. Before that I spent three years studying architecture at Universitat Internacional de Catalunya in Barcelona, Spain. I am always looking for ways to challenge myself professionally. If I had to highlight my best skill, it would be my creativity and my ability to construct complex systems.</p>
+            <p data-reveal>Observing and documenting the world around me comes as second nature. I try to learn an extra skill with every project. That way I improve my designs and get to experiment with techniques I have not used before.</p>
+            <p data-reveal>What follows is a body of work from university and from time spent interning at different studios that I believe best represents that mentality.</p>
+
+            <dl class="facts" data-reveal>
+              <div><dt>Studying</dt><dd>Architecture, MOME Budapest</dd></div>
+              <div><dt>Previously</dt><dd>Architecture, UIC Barcelona · 3 years</dd></div>
+              <div><dt>Studios</dt><dd>Roviras Castelao · CAN · Argemí Ballbé · AÁ projekt</dd></div>
+              <div><dt>Languages</dt><dd>HU native · EN C1 · ES B2</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 01 CAMEROON ============ -->
+    <article class="project" id="cameroon" data-chapter="01" data-name="CAMEROON ÉCOLE" data-coords="3.8480° N 11.5021° E">
+      <header class="p-open">
+        <div class="p-open__media"><img src="assets/img/cam-pavilion.jpg" alt="Completed multi-use pavilion in Yaoundé, Cameroon" decoding="async"></div>
+        <div class="p-open__shade"></div>
+        <div class="p-open__head">
+          <span class="p-num px">01 / 07</span>
+          <h2 class="p-title" data-split="chars">Cameroon<br>École</h2>
+          <p class="p-kicker">Architecture project with Argemí Ballbé Arquitectura</p>
+        </div>
+        <dl class="p-meta">
+          <div><dt>Category</dt><dd>Architecture</dd></div>
+          <div><dt>Tools</dt><dd>Rhino 3D, Photoshop, Lightroom, D5 Render</dd></div>
+          <div><dt>Year</dt><dd>2025</dd></div>
+          <div><dt>Location</dt><dd>Yaoundé, Cameroon</dd></div>
+        </dl>
+      </header>
+
+      <div class="p-body">
+        <div class="wrap p-intro">
+          <p class="p-lead" data-split="lines">From February 2025 I worked with Argemí Ballbé Arquitectura in Terrassa. The defining experience was a school complex near Yaoundé, where I was entrusted with designing a communal pavilion, which has since been built.</p>
+          <div class="p-cols">
+            <p data-reveal>I contributed to a wide range of residential and urban planning projects across Spain, gaining hands-on experience in both conceptual design and practical implementation, from initial sketches and site analysis to detailed drawings and client presentations.</p>
+            <p data-reveal>On the school complex I played a key role in communicating the design process visually to the clients, producing renderings, diagrams and presentations that bridged concept and understanding. The <strong>multi-use pavilion</strong> is a space for both educational and social activities.</p>
+          </div>
+          <div class="badge" data-reveal><span class="badge__dot"></span>BUILT · MULTI-USE PAVILION, 2025</div>
+        </div>
+
+        <!-- drawings: horizontal drag rail -->
+        <div class="rail-wrap">
+          <div class="wrap rail-head"><span class="px">PAVILION DRAWINGS</span><span class="rail-hint px">← DRAG →</span></div>
+          <div class="rail" data-cursor="drag">
+            <figure class="rail__item lens" data-zoom="2.4"><img src="assets/img/cam-section-a.jpg" alt="Multi-use pavilion section A-A'" loading="lazy" decoding="async"><figcaption>Multi-use pavilion section A–A’</figcaption></figure>
+            <figure class="rail__item lens" data-zoom="2.4"><img src="assets/img/cam-section-c.jpg" alt="Multi-use pavilion section C-C'" loading="lazy" decoding="async"><figcaption>Multi-use pavilion section C–C’</figcaption></figure>
+            <figure class="rail__item lens" data-zoom="2.4"><img src="assets/img/cam-plan.jpg" alt="Multi-use pavilion plan" loading="lazy" decoding="async"><figcaption>Multi-use pavilion plan</figcaption></figure>
+          </div>
+        </div>
+
+        <!-- construction photos -->
+        <div class="wrap trio">
+          <figure class="trio__a" data-parallax="-0.08"><div class="img-mask" data-clip><img src="assets/img/cam-roof.jpg" alt="Completed roof structure" loading="lazy" decoding="async"></div><figcaption>Construction photography: completed roof structure</figcaption></figure>
+          <figure class="trio__b" data-parallax="0.12"><div class="img-mask" data-clip><img src="assets/img/cam-brick-1.jpg" alt="Pavilion bricklaying" loading="lazy" decoding="async"></div><figcaption>Pavilion bricklaying</figcaption></figure>
+          <figure class="trio__c" data-parallax="0.04"><div class="img-mask" data-clip><img src="assets/img/cam-brick-2.jpg" alt="Pavilion bricklaying, curved wall" loading="lazy" decoding="async"></div><figcaption>Pavilion bricklaying</figcaption></figure>
+        </div>
+
+        <!-- terrain stepper (pinned) -->
+        <section class="stepper" data-stepper>
+          <div class="stepper__pin">
+            <div class="wrap stepper__grid">
+              <div class="stepper__text">
+                <div class="section-tag section-tag--dark"><span class="sq"></span>CONTEXTUAL RESEARCH</div>
+                <p>Early on, special attention went to budget-friendly, efficient construction that was culturally and technically familiar to the locals. I built the 3D model of the site and researched the ethnic communities around Yaoundé; later I translated the lead architect’s plans into models and client graphics.</p>
+                <ol class="stepper__list">
+                  <li class="is-active"><span>01</span>Pre-existing terrain condition</li>
+                  <li><span>02</span>Vertical connection points</li>
+                  <li><span>03</span>Built volumes</li>
+                  <li><span>04</span>Rehabilitation of vegetation</li>
+                </ol>
+              </div>
+              <div class="stepper__stage">
+                <img src="assets/img/cam-terrain-1.png" alt="Pre-existing terrain" class="is-active" decoding="async">
+                <img src="assets/img/cam-terrain-3.png" alt="Vertical connection points" loading="lazy" decoding="async">
+                <img src="assets/img/cam-terrain-2.png" alt="Built volumes" loading="lazy" decoding="async">
+                <img src="assets/img/cam-terrain-4.png" alt="Rehabilitation of vegetation" loading="lazy" decoding="async">
+                <div class="stepper__counter px"><span class="stepper__idx">01</span> / 04</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- school renders -->
+        <div class="wrap mosaic">
+          <figure class="mosaic__wide" data-cursor="view"><div class="img-mask" data-clip><img src="assets/img/cam-school.jpg" alt="Elementary school exterior" loading="lazy" decoding="async" data-parallax-img></div><figcaption>Elementary school exterior</figcaption></figure>
+          <figure><div class="img-mask" data-clip><img src="assets/img/cam-gallery.jpg" alt="Elementary school second floor" loading="lazy" decoding="async"></div><figcaption>Elementary school second floor</figcaption></figure>
+          <figure><div class="img-mask" data-clip><img src="assets/img/cam-patio.jpg" alt="Kindergarten patio" loading="lazy" decoding="async"></div><figcaption>Kindergarten patio</figcaption></figure>
+          <figure><div class="img-mask" data-clip><img src="assets/img/cam-interior.jpg" alt="Primary school interior" loading="lazy" decoding="async"></div><figcaption>Primary school interior</figcaption></figure>
+        </div>
+
+        <div class="wrap sketches">
+          <span class="px sketches__tag">SCHOOL CHAPEL · DESIGN DRAWINGS</span>
+          <div class="sketches__row">
+            <img src="assets/img/cam-sketch-1.jpg" alt="Chapel sketch" loading="lazy" decoding="async" data-reveal>
+            <img src="assets/img/cam-sketch-2.jpg" alt="Chapel sketch" loading="lazy" decoding="async" data-reveal>
+            <img src="assets/img/cam-sketch-3.jpg" alt="Chapel sketch" loading="lazy" decoding="async" data-reveal>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ 02 GARDEN ============ -->
+    <article class="project project--green" id="garden" data-chapter="02" data-name="GARDEN BUILDING" data-coords="HANDS-ON // HU">
+      <header class="p-open">
+        <div class="p-open__media"><img src="assets/img/garden-hero.jpg" alt="The finished garden" loading="lazy" decoding="async"></div>
+        <div class="p-open__shade"></div>
+        <div class="p-open__head">
+          <span class="p-num px">02 / 07</span>
+          <h2 class="p-title" data-split="chars">Garden<br>Building</h2>
+          <p class="p-kicker">Landscape architecture, construction</p>
+        </div>
+        <dl class="p-meta">
+          <div><dt>Category</dt><dd>Landscaping, construction</dd></div>
+          <div><dt>Tools</dt><dd>My own two hands :)</dd></div>
+          <div><dt>Year</dt><dd>2026</dd></div>
+          <div><dt>Team</dt><dd>Timon Benjamin gardeners</dd></div>
+        </dl>
+      </header>
+
+      <div class="p-body">
+        <div class="wrap p-intro">
+          <p class="p-lead" data-split="lines">Gardening as a hands-on pursuit: working with soil and plants sharpens my sense of how space, light and material behave beyond the walls of a building.</p>
+          <div class="p-cols">
+            <p data-reveal>This garden, conceived and realised collaboratively with a dedicated team, reflects an ongoing dialogue between architecture and nature, offering lessons that inform my design thinking in profound ways.</p>
+            <p data-reveal>Central to the design are <strong>material circularity</strong> and <strong>biodiversity</strong>: repurposing, reusing and selecting elements that can return to the earth, and choosing species that support pollinators, native wildlife and a resilient, layered ecosystem.</p>
+          </div>
+        </div>
+
+        <!-- horizontal process -->
+        <section class="hscroll" data-hscroll>
+          <div class="hscroll__pin">
+            <div class="hscroll__track">
+              <div class="hscroll__intro">
+                <span class="px">PROCESS</span>
+                <h3>Four layers,<br>built by hand.</h3>
+                <p>From barren soil to a planted, mulched and self-watering garden.</p>
+              </div>
+              <figure class="hcard">
+                <div class="hcard__img"><img src="assets/img/garden-step-1.jpg" alt="Demolition and path layout" loading="lazy" decoding="async"></div>
+                <figcaption><span class="hcard__n">01</span><h4>Demolition &amp; path layout</h4><p>We manually removed the top layer of soil and vegetation, leaving the barren state in which the geometry of the gravel paths and geotextile could be laid out.</p></figcaption>
+              </figure>
+              <figure class="hcard">
+                <div class="hcard__img"><img src="assets/img/garden-step-2.jpg" alt="Gravel path construction" loading="lazy" decoding="async"></div>
+                <figcaption><span class="hcard__n">02</span><h4>Gravel path construction</h4><p>Paths lined with geotextile against weeds, filled with gravel salvaged from other parts of the garden, meticulously cleaned and carried in.</p></figcaption>
+              </figure>
+              <figure class="hcard">
+                <div class="hcard__img"><img src="assets/img/garden-step-3.jpg" alt="Introducing diverse flora" loading="lazy" decoding="async"></div>
+                <figcaption><span class="hcard__n">03</span><h4>Introducing diverse flora</h4><p>Working with a garden technician to ensure co-operative biodiversity: more than 25 species and over 300 individual plants.</p></figcaption>
+              </figure>
+              <figure class="hcard">
+                <div class="hcard__img"><img src="assets/img/garden-step-4.jpg" alt="Mulch finished layer" loading="lazy" decoding="async"></div>
+                <figcaption><span class="hcard__n">04</span><h4>Mulch finished layer</h4><p>Approximately 12 m³ of pine-husk mulch retains moisture, protects the drip system and unifies the finished surface.</p></figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <div class="wrap stats">
+          <div class="stat"><span class="stat__num" data-count="25">0</span><span class="stat__suf">+</span><span class="stat__lbl">Species introduced</span></div>
+          <div class="stat"><span class="stat__num" data-count="300">0</span><span class="stat__suf">+</span><span class="stat__lbl">Individual plants</span></div>
+          <div class="stat"><span class="stat__num" data-count="12">0</span><span class="stat__suf">m³</span><span class="stat__lbl">Pine-husk mulch</span></div>
+          <div class="stat"><span class="stat__num" data-count="4">0</span><span class="stat__suf"></span><span class="stat__lbl">Build phases, by hand</span></div>
+        </div>
+
+        <figure class="wide-bleed" data-cursor="view"><div class="img-mask" data-clip><img src="assets/img/garden-pano.jpg" alt="Garden panorama after planting" loading="lazy" decoding="async" data-parallax-img></div></figure>
+
+        <div class="wrap water">
+          <div class="water__text">
+            <div class="section-tag section-tag--dark"><span class="sq"></span>AUTOMATED WATERING</div>
+            <p data-reveal>Freshly planted gardens need regular water or the plants cannot take root. We assembled an automated drip system: main pipes run underground while drip lines nestle between the topsoil and the pine-husk mulch.</p>
+          </div>
+          <!-- one justified row: every sketch shares the same height, width follows its own proportions -->
+          <div class="sketch-row" data-lightbox data-cursor="view">
+            <figure class="sketch" style="--ar: 0.6475"><div class="sketch__img"><img src="assets/img/garden-plan.jpg" alt="Garden build plan sketch" loading="lazy" decoding="async"></div><figcaption>Garden build plan</figcaption></figure>
+            <figure class="sketch" style="--ar: 1.3777"><div class="sketch__img"><img src="assets/img/garden-layers.jpg" alt="Path layer build-up sketch" loading="lazy" decoding="async"></div><figcaption>Path layer build-up</figcaption></figure>
+            <figure class="sketch" style="--ar: 1.6559"><div class="sketch__img"><img src="assets/img/garden-watering.jpg" alt="Watering system set-up sketch" loading="lazy" decoding="async"></div><figcaption>Watering system set-up</figcaption></figure>
+            <figure class="sketch" style="--ar: 1.4733"><div class="sketch__img"><img src="assets/img/garden-etiquette.jpg" alt="Planting etiquette: plant, mulch, drip tube and peg, loosened roots, nutrient-rich soil" loading="lazy" decoding="async"></div><figcaption>Planting etiquette</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ 03 DESIGN STUDIO IV ============ -->
+    <article class="project" id="studio4" data-chapter="03" data-name="DESIGN STUDIO IV" data-coords="41.6488° N 0.8891° W">
+      <header class="p-open">
+        <div class="p-open__media"><img src="assets/img/ds4-hero.jpg" alt="Render of the canoeing club on the Ebro" loading="lazy" decoding="async"></div>
+        <div class="p-open__shade"></div>
+        <div class="p-open__head">
+          <span class="p-num px">03 / 07</span>
+          <h2 class="p-title" data-split="chars">Design<br>Studio IV</h2>
+          <p class="p-kicker">Canoeing club on the Ebro · Hispalyt Ceramic Forum 24/25</p>
+        </div>
+        <dl class="p-meta">
+          <div><dt>Category</dt><dd>Architecture</dd></div>
+          <div><dt>Tools</dt><dd>Rhino 3D, Ladybug, D5 Render, Photoshop, Illustrator</dd></div>
+          <div><dt>Year</dt><dd>2025</dd></div>
+          <div><dt>Location</dt><dd>Zaragoza, Spain</dd></div>
+        </dl>
+      </header>
+
+      <div class="p-body">
+        <div class="wrap p-intro">
+          <p class="p-lead" data-split="lines">A canoeing club in Zaragoza with exposed brick façades and a complete reinterpretation of its site, giving space back to the native wildlife of the Ebro.</p>
+          <div class="p-cols">
+            <p data-reveal>The Hispalyt Ceramic Forum competition challenges students and recent graduates to design a project in which ceramic materials, particularly exposed brick, are fundamental.</p>
+            <p data-reveal>My aim was to rehabilitate the site through sustainable, cost-effective practice, creating a new environment for the river’s ecosystem in tandem with the building’s intended function.</p>
+          </div>
+        </div>
+
+        <!-- site problems -->
+        <div class="wrap site">
+          <figure class="site__map lens" data-zoom="2.2"><img src="assets/img/ds4-flood.jpg" alt="Ebro flooding diagram" loading="lazy" decoding="async"><figcaption>Ebro flooding diagram, scale 1:1000</figcaption></figure>
+          <div class="site__head">
+            <div class="section-tag section-tag--dark"><span class="sq"></span>SITE PROBLEMS</div>
+            <h3 class="h3" data-split="words">Four problems,<br>four responses.</h3>
+          </div>
+          <div class="cards cards--4">
+            <article class="card" data-reveal><div class="card__img"><img src="assets/img/ds4-site-2.jpg" alt="Large concrete pier" loading="lazy" decoding="async"></div><h4>Large concrete pier</h4><p>The primary source of problems: unnatural, unappealing and underutilised. <em>Demolition is a reasonable solution.</em></p></article>
+            <article class="card" data-reveal><div class="card__img"><img src="assets/img/ds4-site-1.jpg" alt="Barren surroundings" loading="lazy" decoding="async"></div><h4>Barren surroundings</h4><p>The path intersection is a massive concrete volume, making renaturalisation difficult. <em>Remodelling is suitable.</em></p></article>
+            <article class="card" data-reveal><div class="card__img"><img src="assets/img/ds4-site-3.jpg" alt="Unstable shore" loading="lazy" decoding="async"></div><h4>Unstable shore</h4><p>Periodic flooding of the Ebro poses structural risk below street level. <em>An adaptive structure is required.</em></p></article>
+            <article class="card" data-reveal><div class="card__img"><img src="assets/img/ds4-site-4.jpg" alt="Unappealing building" loading="lazy" decoding="async"></div><h4>Unappealing building</h4><p>The existing club building sits in disrepair. <em>Refurbishment and repurposing are crucial.</em></p></article>
+          </div>
+        </div>
+
+        <!-- solutions -->
+        <div class="wrap solutions">
+          <div class="section-tag section-tag--dark"><span class="sq"></span>PROPOSED SOLUTIONS</div>
+          <div class="sol-grid">
+            <div class="sol" data-reveal><img src="assets/img/ds4-sol-demolition.jpg" alt="" loading="lazy"><h4><span>A</span>Demolition</h4><p>Removing the massive concrete pier opens spatial opportunities and produces crucial building material.</p></div>
+            <div class="sol" data-reveal><img src="assets/img/ds4-sol-gabion.jpg" alt="" loading="lazy"><h4><span>B</span>Reutilisation</h4><p>The broken-up concrete fills corten-steel gabion baskets that stabilise the new shoreline.</p></div>
+            <div class="sol" data-reveal><img src="assets/img/ds4-sol-reeds.jpg" alt="" loading="lazy"><h4><span>C</span>Renaturalisation</h4><p>Common reed and weeping willows replace the pier, creating new habitat and natural shore stabilisation.</p></div>
+            <div class="sol" data-reveal><img src="assets/img/ds4-sol-0km.jpg" alt="" loading="lazy"><h4><span>D</span>0 km materials</h4><p>Easily sourced materials, partly salvaged from the demolition, a mentality at the forefront of the project.</p></div>
+          </div>
+        </div>
+
+        <!-- life cycle (pinned) -->
+        <section class="cycle" data-cycle>
+          <div class="cycle__pin">
+            <div class="wrap cycle__head">
+              <div class="section-tag section-tag--dark"><span class="sq"></span>CIRCULAR LIFE CYCLE OF THE PROJECT</div>            </div>
+            <div class="wrap cycle__body">
+              <div class="lc-view" data-cursor="drag">
+                <canvas class="lc-canvas" aria-label="3D model of the canoeing club site across its five life-cycle stages"></canvas>
+                <div class="lc-labels" aria-hidden="true"></div>
+                <div class="lc-loading px">LOADING PROGRESS MODELS<span>…</span></div>
+                <div class="lc-title">
+                  <span class="lc-title__num px">01</span>
+                  <span class="lc-title__name">Preexistence</span>
+                </div>
+              </div>
+              <div class="lc-bar" role="slider" tabindex="0" aria-label="Life cycle timeline" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Preexistence">
+                <div class="lc-bar__rail">
+                  <div class="lc-bar__fill"></div>
+                  <div class="lc-bar__decay"><span></span></div>
+                  <div class="lc-bar__handle"><span class="lc-bar__read px">PREEXISTENCE</span></div>
+                </div>
+                <ol class="lc-bar__stops">
+                  <li><button type="button" data-stage="0"><span>1</span>Preexistence</button></li>
+                  <li><button type="button" data-stage="1"><span>2</span>Demolition</button></li>
+                  <li><button type="button" data-stage="2"><span>3</span>Rehabilitation</button></li>
+                  <li><button type="button" data-stage="3"><span>4</span>New structure</button></li>
+                  <li><button type="button" data-stage="4"><span>5</span>Decay</button></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- programme -->
+        <div class="wrap program">
+          <div class="program__list">
+            <div class="section-tag section-tag--dark"><span class="sq"></span>PROGRAMME</div>
+            <button class="prog is-active" data-img="assets/img/ds4-terrace.jpg"><span class="prog__n">01</span><span class="prog__t">Elevated terrace</span><span class="prog__d">Recurring floods require an adaptive structure: the whole complex rises on stilts above the flood line.</span></button>
+            <button class="prog" data-img="assets/img/ds4-cafe.jpg"><span class="prog__n">02</span><span class="prog__t">Cafeteria</span><span class="prog__d">Blends with the social life of the site, using the large shared terrace as its main seating area.</span></button>
+            <button class="prog" data-img="assets/img/ds4-gym.jpg"><span class="prog__n">03</span><span class="prog__t">Gym</span><span class="prog__d">Year-round training under an increased interior height for a spacious, open atmosphere.</span></button>
+            <button class="prog" data-img="assets/img/ds4-multi.jpg"><span class="prog__n">04</span><span class="prog__t">Multi-use space</span><span class="prog__d">The current club sits empty all winter; a flexible indoor space keeps it relevant all year.</span></button>
+            <button class="prog" data-img="assets/img/ds4-pier.jpg"><span class="prog__n">05</span><span class="prog__t">Boat pier</span><span class="prog__d">Aligned with the river’s natural flow, calmed by the reed cultivation for easy loading.</span></button>
+          </div>
+          <div class="program__view"><img src="assets/img/ds4-terrace.jpg" alt="Programme render" loading="lazy" decoding="async"></div>
+        </div>
+
+        <div class="wrap drawings">
+          <figure class="lens paper-frame" data-zoom="2.6"><img src="assets/img/ds4-section.jpg" alt="Section A-A'" loading="lazy" decoding="async"><figcaption>Section A–A’, scale 1:200</figcaption></figure>
+          <figure class="lens paper-frame" data-zoom="2.2"><img src="assets/img/ds4-plan.jpg" alt="First floor plan" loading="lazy" decoding="async"><figcaption>1st floor plan, scale 1:400</figcaption></figure>
+        </div>
+
+        <!-- vegetation -->
+        <div class="wrap veg">
+          <div class="section-tag section-tag--dark"><span class="sq"></span>NATIVE VEGETATION</div>
+          <div class="veg__grid">
+            <figure class="veg__card tilt"><img src="assets/img/ds4-veg-willow.jpg" alt="Weeping willow" loading="lazy"><figcaption><h4>Weeping willow</h4><i>Salix babylonica</i><p>Deep roots stabilise the riverbanks and prevent erosion.</p></figcaption></figure>
+            <figure class="veg__card tilt"><img src="assets/img/ds4-veg-poplar.jpg" alt="Black poplar" loading="lazy"><figcaption><h4>Black poplar</h4><i>Populus nigra</i><p>Stabilises banks; its leaves feed herbivores and shelter birds.</p></figcaption></figure>
+            <figure class="veg__card tilt"><img src="assets/img/ds4-veg-reed.jpg" alt="Common reed" loading="lazy"><figcaption><h4>Common reed</h4><i>Phragmites australis</i><p>Dense stands shelter birds and filter the water.</p></figcaption></figure>
+            <figure class="veg__card tilt"><img src="assets/img/ds4-veg-bulrush.jpg" alt="Bulrush" loading="lazy"><figcaption><h4>Bulrush</h4><i>Schoenoplectus lacustris</i><p>Grows in shallow water, habitat for aquatic wildlife.</p></figcaption></figure>
+          </div>
+        </div>
+
+        <!-- concept development: drag or swipe through, click to open -->
+        <div class="rail-wrap rail-wrap--dev">
+          <div class="wrap rail-head">
+            <span class="px">CONCEPT DEVELOPMENT SKETCHES <span class="rail-count">(17)</span></span>
+            <span class="rail-ctrl">
+              <span class="rail-hint px">DRAG · CLICK TO OPEN</span>
+              <button type="button" class="rail-btn" data-dir="-1" aria-label="Previous sketches">←</button>
+              <button type="button" class="rail-btn" data-dir="1" aria-label="Next sketches">→</button>
+            </span>
+          </div>
+          <div class="rail rail--dev" data-cursor="view" data-lightbox>
+            <figure class="rail__item"><img src="assets/img/ds4-sketch-aerial.jpg" alt="Aerial concept sketch of the club on the Ebro" loading="lazy"><figcaption>Aerial concept</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-sketch-site.jpg" alt="Site concept sketch" loading="lazy"><figcaption>Site concept</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-18.jpg" alt="Landscape study sheet" loading="lazy"><figcaption>Landscape study</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-15.jpg" alt="Site grid study" loading="lazy"><figcaption>Site grid study</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-09.jpg" alt="Volume arrangement and views" loading="lazy"><figcaption>Volume arrangement and views</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-05.jpg" alt="Plan geometry study" loading="lazy"><figcaption>Plan geometry study</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-11.jpg" alt="Programme and access sketch" loading="lazy"><figcaption>Programme and access</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-08.jpg" alt="Tent concept and canopy sections" loading="lazy"><figcaption>Tent concept</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-04.jpg" alt="Section study with solar sail" loading="lazy"><figcaption>Section with solar sail</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-03.jpg" alt="Foundations: gabion baskets, cultivated reeds and hardwood stilts" loading="lazy"><figcaption>Foundations: gabions, reeds, stilts</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-02.jpg" alt="Ventilation chamber and vernacular shading" loading="lazy"><figcaption>Ventilation and vernacular shading</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-06.jpg" alt="Typical roof profile of Aragón with integrated boat storage" loading="lazy"><figcaption>Typical roof profile, Aragón</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-07.jpg" alt="Roof structure build-up" loading="lazy"><figcaption>Roof structure build-up</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-dev-thatch-roof.jpg" alt="Thatch roof construction" loading="lazy"><figcaption>Thatch roof construction</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-sketch-exploded.jpg" alt="Exploded structure sketch" loading="lazy"><figcaption>Exploded structure</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-sketch-view.jpg" alt="Interior view sketch" loading="lazy"><figcaption>Interior view</figcaption></figure>
+            <figure class="rail__item"><img src="assets/img/ds4-sketch-reeds.jpg" alt="View through the gabions to the water, and the pebble beach" loading="lazy"><figcaption>Reed plantation and pebble beach</figcaption></figure>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ 04 HELSINKI ============ -->
+    <article class="project" id="helsinki" data-chapter="04" data-name="HELSINKI ADM" data-coords="60.1675° N 24.9566° E">
+      <header class="p-open">
+        <div class="p-open__media"><img src="assets/img/hel-aerial.jpg" alt="Bird's-eye render of CAN's competition entry" loading="lazy" decoding="async"></div>
+        <div class="p-open__shade"></div>
+        <div class="p-open__head">
+          <span class="p-num px">04 / 07</span>
+          <h2 class="p-title" data-split="chars">Helsinki<br>ADM</h2>
+          <p class="p-kicker">Architecture &amp; Design Museum competition · CAN Architects</p>
+        </div>
+        <dl class="p-meta">
+          <div><dt>Category</dt><dd>Architecture competition</dd></div>
+          <div><dt>Tools</dt><dd>Rhino 3D, Twinmotion, Photoshop</dd></div>
+          <div><dt>Year</dt><dd>2024</dd></div>
+          <div><dt>Location</dt><dd>Helsinki, Finland</dd></div>
+        </dl>
+      </header>
+      <div class="p-body">
+        <div class="wrap p-intro">
+          <p class="p-lead" data-split="lines">Summer 2024 with CAN Architects in Budapest, working on the studio’s entry for the Helsinki Architecture and Design Museum competition.</p>
+          <div class="p-cols">
+            <p data-reveal>I took an active part in the design process, but my main focus was building the 3D models and producing the renderings for the final competition panels. The work deepened my understanding of iterative design and teamwork.</p>
+          </div>
+        </div>
+        <div class="wrap duo duo--renders">
+          <figure data-parallax="-0.06"><div class="img-mask" data-clip><img src="assets/img/hel-court.jpg" alt="Interior render of the central gathering space" loading="lazy" decoding="async"></div><figcaption>Central gathering space</figcaption></figure>
+          <figure data-parallax="0.1"><div class="img-mask" data-clip><img src="assets/img/hel-docks.jpg" alt="Exterior render from the docks" loading="lazy" decoding="async"></div><figcaption>From the direction of the docks</figcaption></figure>
+        </div>
+        <div class="pano" data-pano data-cursor="drag">
+          <div class="pano__track"><img src="assets/img/hel-pano.jpg" alt="Exterior render with Helsinki's cityscape" loading="lazy" decoding="async" draggable="false"></div>
+          <div class="wrap pano__cap"><span class="px">PANORAMA · HELSINKI WATERFRONT</span><span class="px">← DRAG TO PAN →</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ 05 ROVIRAS CASTELAO ============ -->
+    <article class="project project--warm" id="roviras" data-chapter="05" data-name="ROVIRAS CASTELAO" data-coords="41.3874° N 2.1686° E">
+      <header class="p-open">
+        <div class="p-open__media"><img src="assets/img/rc-planas-board-1.jpg" alt="Las Planas family home presentation board" loading="lazy" decoding="async"></div>
+        <div class="p-open__shade"></div>
+        <div class="p-open__head">
+          <span class="p-num px">05 / 07</span>
+          <h2 class="p-title" data-split="chars">Roviras<br>Castelao</h2>
+          <p class="p-kicker">Architecture internship · Barcelona</p>
+        </div>
+        <dl class="p-meta">
+          <div><dt>Category</dt><dd>Architecture, Graphic design, Photography</dd></div>
+          <div><dt>Tools</dt><dd>Rhino 3D, Twinmotion, InDesign, Photoshop, Illustrator</dd></div>
+          <div><dt>Year</dt><dd>2023–2025</dd></div>
+          <div><dt>Studio</dt><dd>Jordi Roviras &amp; Cristina Castelao</dd></div>
+        </dl>
+      </header>
+      <div class="p-body">
+        <div class="wrap p-intro">
+          <p class="p-lead" data-split="lines">From my second academic year I worked closely with Jordi Roviras and Cristina Castelao on visualisation, 3D-printed models, technical documentation and post-production.</p>
+          <div class="p-cols">
+            <p data-reveal><strong>El Bruc:</strong> informational graphics, post-production and an educational synthesis of design and construction. <strong>Virolai Batxillerat:</strong> renders and visual material. <strong>Las Planas:</strong> a 3D-printed model, sun-exposure and energy-gain calculations, post-production.</p>
+            <p data-reveal>With BeaMalevich I built the <strong>Farnsworth model</strong> and its assembly manual. Their practice shaped my understanding of architecture: precision, clarity, and visual communication woven into the design process.</p>
+          </div>
+        </div>
+
+        <div class="wrap posters">
+          <figure class="poster tilt" data-cursor="view"><img src="assets/img/rc-elbruc.jpg" alt="Advertisement poster created after the El Bruc project" loading="lazy" decoding="async"><figcaption>Advertisement poster, “El Bruc”</figcaption></figure>
+          <div class="posters__text">
+            <div class="section-tag section-tag--dark"><span class="sq"></span>LAS PLANAS FAMILY HOME</div>
+            <p data-reveal>My first task was a 3D model of the site and the building to analyse their relationship. Later I created interior and exterior concept visualisations to support client communication.</p>
+            <div class="section-tag section-tag--dark"><span class="sq"></span>POST PRODUCTION</div>
+            <p data-reveal>After the project I designed a promotional poster for the studio, built from the architectural renders and set in the signature colour palette of Roviras Castelao Arquitectura.</p>
+          </div>
+          <figure class="poster poster--tall tilt" data-cursor="view"><img src="assets/img/rc-planas-poster.jpg" alt="Las Planas promotional poster" loading="lazy" decoding="async"><figcaption>Promotional poster, Las Planas, 2024</figcaption></figure>
+        </div>
+        <div class="wrap boards">
+          <figure data-cursor="view"><div class="img-mask" data-clip><img src="assets/img/rc-planas-board-2.jpg" alt="Las Planas interior presentation board" loading="lazy" decoding="async"></div><figcaption>Las Planas shared spaces board</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ 06 DESIGN STUDIO III ============ -->
+    <article class="project" id="studio3" data-chapter="06" data-name="DESIGN STUDIO III" data-coords="41.4378° N 2.1707° E">
+      <header class="p-open">
+        <div class="p-open__media"><img src="assets/img/ds3-hero.jpg" alt="Design Studio III concept aerial render" loading="lazy" decoding="async"></div>
+        <div class="p-open__shade"></div>
+        <div class="p-open__head">
+          <span class="p-num px">06 / 07</span>
+          <h2 class="p-title" data-split="chars">Design<br>Studio III</h2>
+          <p class="p-kicker">Mixed-use public facility · Nou Barris, Barcelona</p>
+        </div>
+        <dl class="p-meta">
+          <div><dt>Category</dt><dd>Architecture, Graphic design, Photography</dd></div>
+          <div><dt>Tools</dt><dd>Rhino 3D, Photoshop, Lightroom, Twinmotion</dd></div>
+          <div><dt>Year</dt><dd>2024</dd></div>
+          <div><dt>Location</dt><dd>Carrer de Marie Curie, Barcelona</dd></div>
+        </dl>
+      </header>
+      <div class="p-body">
+        <div class="wrap p-intro">
+          <p class="p-lead" data-split="lines">A public facility beside an urban revitalisation project centred on an abandoned church, with a parametric landscape that responds to a difficult topography.</p>
+          <div class="p-cols">
+            <p data-reveal>Due to the complex topographical and landscaping challenges of the site, I focused my research on parametric methodologies to develop responsive, adaptable landscape solutions that integrate with the surrounding context.</p>
+            <p data-reveal>For the presentation I photographed the physical models and the site, and produced a video explaining the concept and process, showing how parametric thinking and visual storytelling can work together.</p>
+          </div>
+        </div>
+
+        <div class="marquee marquee--photos" data-marquee data-speed="0.6" data-lightbox data-cursor="view">
+          <div class="marquee__track">
+            <figure><img src="assets/img/ds3-site-3.jpg" alt="" loading="lazy"><figcaption>Parc central de Nou Barris</figcaption></figure>
+            <figure><img src="assets/img/ds3-site-4.jpg" alt="" loading="lazy"><figcaption>Surrounding streets</figcaption></figure>
+            <figure><img src="assets/img/ds3-site-1.jpg" alt="" loading="lazy"><figcaption>Escola Àgora</figcaption></figure>
+            <figure><img src="assets/img/ds3-site-2.jpg" alt="" loading="lazy"><figcaption>Iglésia San Rafael</figcaption></figure>
+            <figure><img src="assets/img/ds3-site-5.jpg" alt="" loading="lazy"><figcaption>Local residential block</figcaption></figure>
+            <figure><img src="assets/img/ds3-site-6.jpg" alt="" loading="lazy"><figcaption>Retaining solutions</figcaption></figure>
+            <figure><img src="assets/img/ds3-site-7.jpg" alt="" loading="lazy"><figcaption>Escola Àgora</figcaption></figure>
+          </div>
+        </div>
+
+        <div class="wrap field">
+          <div class="field__text">
+            <div class="section-tag section-tag--dark"><span class="sq"></span>MAGNETIC VECTORFIELD</div>
+            <h3 class="h3" data-split="words">Landscape,<br>by field lines.</h3>
+            <p data-reveal>A parametric landscaping solution for the site’s complex topography, developed step by step from the bare terrain to the final terraced landscape. Scroll to run the four steps.</p>
+            <div class="field__steps px"><span class="is-active">01 BASE</span><span>02 GRID</span><span>03 FIELD</span><span>04 TERRACES</span></div>
+          </div>
+          <div class="field__stage" data-field data-cursor="scrub">
+            <img src="assets/img/ds3-field-1.png" class="is-active" alt="Base terrain" loading="lazy">
+            <img src="assets/img/ds3-field-2.png" alt="Grid subdivision" loading="lazy">
+            <img src="assets/img/ds3-field-3.png" alt="Vector field lines" loading="lazy">
+            <img src="assets/img/ds3-field-4.png" alt="Resulting terraces" loading="lazy">
+            <div class="field__bar"><span></span></div>
+          </div>
+        </div>
+
+        <div class="wrap drawings drawings--ds3">
+          <figure class="lens paper-frame" data-zoom="2.2"><img src="assets/img/ds3-plan.jpg" alt="Library first floor plan" loading="lazy" decoding="async"><figcaption>Library 1st floor plan, scale 1:500</figcaption></figure>
+          <figure class="lens paper-frame" data-zoom="2.4"><img src="assets/img/ds3-sections.jpg" alt="Sections A-A' and B-B'" loading="lazy" decoding="async"><figcaption>Sections A–A’ &amp; B–B’, scale 1:600</figcaption></figure>
+        </div>
+
+        <div class="wrap sk-grid">
+          <span class="px sketches__tag">CONCEPT DEVELOPMENT DRAWINGS <span class="sk-grid__hint">· CLICK TO OPEN</span></span>
+          <div class="sk-grid__inner" data-lightbox data-cursor="view">
+            <img src="assets/img/ds3-sk-1.jpg" data-full="assets/img/ds3-sk-1-hd.jpg" alt="Concept sketch" loading="lazy" data-reveal>
+            <img src="assets/img/ds3-sk-2.jpg" data-full="assets/img/ds3-sk-2-hd.jpg" alt="Concept sketch" loading="lazy" data-reveal>
+            <img src="assets/img/ds3-sk-3.jpg" data-full="assets/img/ds3-sk-3-hd.jpg" alt="Façade sketch" loading="lazy" data-reveal>
+            <img src="assets/img/ds3-sk-4.jpg" data-full="assets/img/ds3-sk-4-hd.jpg" alt="Amphitheatre sketch" loading="lazy" data-reveal>
+            <img src="assets/img/ds3-sk-5.jpg" data-full="assets/img/ds3-sk-5-hd.jpg" alt="Gallery sketch" loading="lazy" data-reveal>
+            <img src="assets/img/ds3-sk-6.jpg" data-full="assets/img/ds3-sk-6-hd.jpg" alt="Landscape sketch" loading="lazy" data-reveal>
+          </div>
+        </div>
+
+        <div class="wrap mosaic mosaic--ds3">
+          <figure class="mosaic__wide" data-cursor="view"><div class="img-mask" data-clip><img src="assets/img/ds3-landscape.jpg" alt="Redesigned landscape, north-west facade" loading="lazy" data-parallax-img></div><figcaption>Redesigned landscape (north-west façade)</figcaption></figure>
+          <figure class="mosaic__tall"><div class="img-mask" data-clip><img src="assets/img/ds3-cantilever.jpg" alt="Cantilever volume" loading="lazy"></div><figcaption>Cantilever volume (south-east façade)</figcaption></figure>
+          <figure><div class="img-mask" data-clip><img src="assets/img/ds3-gallery.jpg" alt="Common space with gallery" loading="lazy"></div><figcaption>Common space with gallery</figcaption></figure>
+          <figure><div class="img-mask" data-clip><img src="assets/img/ds3-library.jpg" alt="Communal library" loading="lazy"></div><figcaption>Communal library</figcaption></figure>
+          <figure><div class="img-mask" data-clip><img src="assets/img/ds3-residential.jpg" alt="Residential extension" loading="lazy"></div><figcaption>Residential extension</figcaption></figure>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ 07 GRID 808 ============ -->
+    <article class="project project--grid" id="grid" data-chapter="07" data-name="GRID 808" data-coords="NO COORDINATES // HYPOTHETICAL">
+      <header class="p-open">
+        <div class="p-open__media"><img src="assets/img/grid-hero.jpg" alt="Concept collage of GRID 808" loading="lazy" decoding="async"></div>
+        <div class="p-open__shade"></div>
+        <div class="p-open__head">
+          <span class="p-num px">07 / 07</span>
+          <h2 class="p-title" data-split="chars">GRID<br>808</h2>
+          <p class="p-kicker">Gantry Rigged Industrial Development</p>
+        </div>
+        <dl class="p-meta">
+          <div><dt>Category</dt><dd>Art / Architecture</dd></div>
+          <div><dt>Tools</dt><dd>Watercolours, Rhino 3D, Grasshopper + Wasp, Photoshop, Illustrator</dd></div>
+          <div><dt>Year</dt><dd>2025</dd></div>
+          <div><dt>Movement</dt><dd>Russian Constructivism</dd></div>
+        </dl>
+      </header>
+      <div class="p-body">
+        <div class="wrap p-intro">
+          <p class="p-lead" data-split="lines">The task was to interpret a 20th-century art movement through an architectural project. Russian Constructivism, with its focus on structure, order and the social role of design, became GRID 808: modular composition and material clarity in a contemporary framework.</p>
+        </div>
+
+        <div class="manifesto">
+          <p class="manifesto__txt" data-scrub-text>Here, humanity is obsolete. The machine has replaced the organism. The structure has replaced the soul. The G.R.I.D. is not alive. It simply persists.</p>
+        </div>
+
+        <div class="wrap triptych">
+          <article data-reveal><div class="trip__img"><img src="assets/img/grid-sk-concept.jpg" alt="First concept drawing" loading="lazy"></div><h4><span>01</span>Concept</h4><p>My first drawing examined scale contrasts so extreme they blurred the boundary between structure, object and landscape.</p></article>
+          <article data-reveal><div class="trip__img"><img src="assets/img/grid-sk-tower.jpg" alt="Tower sketch" loading="lazy"></div><h4><span>02</span>Focal points</h4><p>Inspired by the Halo series, “towers” became the sole connection between the floating landscape of machinery and the Earth.</p></article>
+          <article data-reveal><div class="trip__img"><img src="assets/img/grid-sk-components.jpg" alt="Components sketch" loading="lazy"></div><h4><span>03</span>Components</h4><p>Five modules, organised in an organised chaos through the Grasshopper plugin Wasp.</p></article>
+        </div>
+
+        <div class="wrap units">
+          <div class="units__head"><span class="px">G.R.I.D. COMPONENT LIBRARY</span><span class="px">05 MODULES</span></div>
+          <div class="units__grid">
+            <article class="unit" data-reveal><header>UNIT_00</header><svg viewBox="0 0 100 100" class="unit__ico"><path d="M50 8 L70 20 L70 80 L50 92 L30 80 L30 20 Z M30 20 L50 32 L70 20 M50 32 L50 92 M30 40 L50 52 L70 40 M30 60 L50 72 L70 60"/></svg><p><b>Control tower</b>The vertical anchor, the only link between the machine landscape and the ground.</p></article>
+            <article class="unit" data-reveal><header>UNIT_01</header><svg viewBox="0 0 100 100" class="unit__ico"><path d="M14 50 h72 M14 40 h72 M14 60 h72 M20 36 v28 M32 36 v28 M44 36 v28 M56 36 v28 M68 36 v28 M80 36 v28"/></svg><p><b>Connective unit</b>The main fibre of the GRID: lets product flow between units, creating a complex maze of connections.</p></article>
+            <article class="unit" data-reveal><header>UNIT_02</header><svg viewBox="0 0 100 100" class="unit__ico"><ellipse cx="38" cy="28" rx="16" ry="6"/><path d="M22 28 v40 a16 6 0 0 0 32 0 v-40"/><ellipse cx="64" cy="40" rx="16" ry="6"/><path d="M48 40 v40 a16 6 0 0 0 32 0 v-40"/></svg><p><b>Storage unit</b>Massive industrial storage, holding the product before and after refinement.</p></article>
+            <article class="unit" data-reveal><header>UNIT_03</header><svg viewBox="0 0 100 100" class="unit__ico"><circle cx="50" cy="50" r="14"/><path d="M50 36 V10 M50 64 V90 M36 50 H10 M64 50 H90 M44 10 h12 M44 90 h12 M10 44 v12 M90 44 v12"/></svg><p><b>Branch unit</b>Diverts the flow of product in the G.R.I.D. to different sectors.</p></article>
+            <article class="unit" data-reveal><header>UNIT_04</header><svg viewBox="0 0 100 100" class="unit__ico"><path d="M20 30 L50 16 L80 30 L80 72 L50 86 L20 72 Z M20 30 L50 44 L80 30 M50 44 V86 M28 40 v28 M36 44 v28 M44 47 v28 M58 47 v28 M66 44 v28 M74 40 v28"/></svg><p><b>Ventilation unit</b>Protruding from the control towers, dissipating the heat of production.</p></article>
+          </div>
+        </div>
+
+        <figure class="wrap board lens" data-zoom="2.4"><img src="assets/img/grid-board.jpg" alt="GRID 808 presentation board" loading="lazy" decoding="async"><figcaption>G.R.I.D. pavilion plan 1:40, section 1:20 and mobility suit diagram</figcaption></figure>
+      </div>
+    </article>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="experience theme-paper" id="experience" data-chapter="—" data-name="EXPERIENCE" data-coords="47.4979° N 19.0402° E">
+      <div class="wrap">
+        <div class="section-tag"><span class="sq"></span>WORK EXPERIENCE</div>
+        <h2 class="xp__title" data-split="chars">Experience</h2>
+
+        <div class="xp__group">
+          <h3 class="xp__group-t px">ARCHITECTURE STUDIO EXPERIENCE</h3>
+          <details class="xp">
+            <summary><span class="xp__yr">2023–25</span><span class="xp__org">Roviras Castelao Arquitectura</span><span class="xp__role">Architectural assistant · Barcelona</span><span class="xp__plus"></span></summary>
+            <div class="xp__body"><p><b>El Bruc:</b> informational graphics and post-production for presentations, plus an educational synthesis of the design and construction process. <b>Virolai Batxillerat:</b> renders and post-production visuals. <b>Las Planas:</b> 3D-printed model, environmental calculations (sun exposure, energy gain), post-production. <b>Farnsworth model:</b> with BeaMalevich: 3D model and assembly manual.</p></div>
+          </details>
+          <details class="xp">
+            <summary><span class="xp__yr">2024</span><span class="xp__org">CAN Architects</span><span class="xp__role">Architectural intern · Budapest</span><span class="xp__plus"></span></summary>
+            <div class="xp__body"><p>Contributed to the <b>Helsinki Architecture and Design Museum</b> competition, assisting in design and presentation. Participated in the <b>Szemere Street Gate renovation</b>: concept development and technical details. Assisted with the <b>Zalakomár Community Centre</b>, including concept visualisation and technical support.</p></div>
+          </details>
+          <details class="xp">
+            <summary><span class="xp__yr">2025</span><span class="xp__org">Argemí Ballbé Arquitectura</span><span class="xp__role">Architectural assistant · Terrassa</span><span class="xp__plus"></span></summary>
+            <div class="xp__body"><p><b>Maresme:</b> 3D models and renderings for a residential project, supporting client communication. <b>Pollanc:</b> early-phase 3D modelling, later technical documentation. <b>La Cerdanya:</b> urban planning, modelling “modular” houses from initial sketches and rendering them for the client. <b>Cameroon École:</b> 3D modelling, rendering and technical documentation of a school complex; cultural research into traditional local techniques; an active design role on the pavilions distributed throughout the school.</p></div>
+          </details>
+          <details class="xp">
+            <summary><span class="xp__yr">2026</span><span class="xp__org">AÁ projekt</span><span class="xp__role">Model maker &amp; visualisation · Budapest · Jun–Sep</span><span class="xp__plus"></span></summary>
+            <div class="xp__body"><p>Produced <b>digital 3D models</b> and hand-built <b>physical presentation models</b> for the studio’s projects. Took the models through to finished imagery: <b>model photography</b>, from lighting and composition to capture, followed by <b>post-production</b> including colour correction, retouching and image editing for presentation material.</p></div>
+          </details>
+        </div>
+
+        <div class="xp__group xp__group--2">
+          <div>
+            <h3 class="xp__group-t px">EVENT ORGANISATION &amp; MANAGEMENT</h3>
+            <ul class="xp__mini">
+              <li><span class="xp__yr">2019–20</span><span><b>Budapest 100</b>: Organiser, event manager. Coordinated logistics and operations during the architectural festival; oversaw scheduling and execution.</span></li>
+              <li><span class="xp__yr">2020</span><span><b>Csepel Nyitott Gyárak Hétvégéje</b>: Organiser, event manager. Open-factory tours, participants and schedules.</span></li>
+              <li><span class="xp__yr">2024</span><span><b>OHB48 Barcelona</b>: Event organiser, manager. Planning and operations, collaboration among teams.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="xp__group-t px">OTHER</h3>
+            <ul class="xp__mini">
+              <li><span class="xp__yr">2025</span><span><b>AISB, Budapest</b>: Visual content specialist. Social media production, hardware management, documenting school events.</span></li>
+              <li><span class="xp__yr">2026</span><span><b>Timon Benjamin gardeners</b>: Manual labour, garden design assistant. Garden rebuilding, maintenance and spatial organisation.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="skills theme-paper" id="skills" data-chapter="—" data-name="HARD SKILLS" data-coords="47.4979° N 19.0402° E">
+      <div class="wrap">
+        <div class="section-tag"><span class="sq"></span>HARD SKILLS</div>
+        <div class="skills__grid">
+          <div class="sk-col"><h4 class="px">IMAGE &amp; LAYOUT</h4>
+            <div class="meter" data-level="5"><span>Adobe Photoshop</span><i></i></div>
+            <div class="meter" data-level="4"><span>Adobe InDesign</span><i></i></div>
+            <div class="meter" data-level="4"><span>Adobe Illustrator</span><i></i></div>
+            <div class="meter" data-level="4"><span>Adobe Lightroom</span><i></i></div>
+          </div>
+          <div class="sk-col"><h4 class="px">MODELLING</h4>
+            <div class="meter" data-level="4"><span>Rhinoceros 3D</span><i></i></div>
+            <div class="meter" data-level="3"><span>Blender</span><i></i></div>
+            <div class="meter" data-level="4"><span>SketchUp</span><i></i></div>
+            <div class="meter" data-level="3"><span>Grasshopper</span><i></i></div>
+          </div>
+          <div class="sk-col"><h4 class="px">RENDERING</h4>
+            <div class="meter" data-level="5"><span>D5 Render</span><i></i></div>
+            <div class="meter" data-level="5"><span>Twinmotion</span><i></i></div>
+            <div class="meter" data-level="2"><span>Lumion</span><i></i></div>
+          </div>
+          <div class="sk-col"><h4 class="px">MOTION</h4>
+            <div class="meter" data-level="3"><span>Final Cut</span><i></i></div>
+            <div class="meter" data-level="2"><span>Adobe Premiere Pro</span><i></i></div>
+            <div class="meter" data-level="2"><span>Houdini</span><i></i></div>
+          </div>
+        </div>
+        <div class="langs">
+          <h4 class="px">LANGUAGE CERTIFICATIONS</h4>
+          <div class="langs__row">
+            <div class="lang"><span class="lang__lvl">C1</span><span class="lang__name">English</span><span class="lang__cert">CAE, IELTS</span></div>
+            <div class="lang"><span class="lang__lvl">B2</span><span class="lang__name">Spanish</span><span class="lang__cert">Instituto Cervantes</span></div>
+            <div class="lang"><span class="lang__lvl">N</span><span class="lang__name">Hungarian</span><span class="lang__cert">Native</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact" id="contact" data-chapter="∞" data-name="CONTACT" data-coords="41.3874° N 2.1686° E">
+      <span class="mark mark--tl"></span><span class="mark mark--tr"></span>
+      <span class="mark mark--bl"></span><span class="mark mark--br"></span>
+      <div class="contact__marquee" aria-hidden="true"><div class="contact__marquee-track"><span>LET’S BUILD SOMETHING ·&nbsp;</span><span>LET’S BUILD SOMETHING ·&nbsp;</span><span>LET’S BUILD SOMETHING ·&nbsp;</span><span>LET’S BUILD SOMETHING ·&nbsp;</span></div></div>
+      <div class="contact__inner">
+        <span class="px contact__tag">[ OPEN TO INTERNSHIPS &amp; COLLABORATIONS ]</span>
+        <a class="contact__mail magnetic" href="mailto:szekeres.david04@gmail.com" data-copy="szekeres.david04@gmail.com" data-cursor="copy">szekeres.david04<span>@gmail.com</span></a>
+        <div class="contact__links">
+          <a href="https://instagram.com/_szekiro_" target="_blank" rel="noopener" class="magnetic">Instagram · @_szekiro_</a>
+          <a href="tel:+36706056886" class="magnetic">T. +36 70 605 6886</a>
+          <a href="#top" class="magnetic" data-cursor="top">Back to top ↑</a>
+        </div>
+      </div>
+      <footer class="footer">
+        <span>© 2026 Dávid László Szekeres</span>
+        <span class="px">DESIGNER // ARCHITECT</span>
+        <span>Budapest / Barcelona</span>
+      </footer>
+      <div class="toast px" role="status">EMAIL COPIED TO CLIPBOARD</div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

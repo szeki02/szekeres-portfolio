@@ -1,0 +1,4 @@
+# working scripts and raw source models used to generate the assets
+tools/
+# superseded binary of the life-cycle geometry (now shipped in assets/lifecycle-geometry.json)
+assets/lifecycle.bin
