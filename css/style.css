@@ -246,6 +246,8 @@ body.menu-open .menu-overlay { clip-path: inset(0 0 0 0); }
 .cm-cat { font-size: 11px; color: var(--fg-dim); }
 .cm-thumb { position: absolute; top: calc(100% + 10px); left: 0; width: clamp(180px, 15vw, 260px); aspect-ratio: 4 / 3; background: var(--ink-3) center / cover no-repeat; clip-path: inset(0 0 100% 0); transition: clip-path .5s var(--ease-out); pointer-events: none; }
 .cm-item.is-left .cm-thumb { left: auto; right: 0; }
+/* the portrait is taller than the thumbnail: frame it from the top so the whole head shows */
+.cm-item[href="#about"] .cm-thumb { background-position: 50% 0; }
 .cm-item.is-low .cm-thumb { top: auto; bottom: calc(100% + 10px); clip-path: inset(100% 0 0 0); }
 .cm-item.is-on .cm-thumb { clip-path: inset(0 0 0 0); }
 .cube-menu.is-narrow .cube-menu__leads, .cube-menu.is-narrow .cm-cat, .cube-menu.is-narrow .cm-thumb { display: none; }
