@@ -568,12 +568,26 @@ figure figcaption { font-size: 12px; font-style: italic; color: var(--fg-dim); m
 .units__head { display: flex; justify-content: space-between; color: var(--fg-dim); margin-bottom: 16px; }
 .units__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
 .unit { background: var(--acc); color: #fff; padding: 14px; display: flex; flex-direction: column; min-height: 320px; transition: transform .5s var(--ease-out), background .4s; }
-.unit__ico { width: 70%; margin: 26px auto; fill: none; stroke: #fff; stroke-width: 2; stroke-linejoin: round; flex: 1; }
+/* the panel's own unit drawings, all at one scale as on the board (--w = share of the widest),
+   drawn in once the card is seen, then a wave of light runs through them in the unit's own
+   direction: power rising up the tower, product flowing along the connector, out of the branch */
+.unit__ico { display: block; width: calc(var(--w, .7) * 100%); max-height: 230px; margin: auto; padding-block: 22px; overflow: visible; }
+.unit__ico path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.unit.is-drawn .unit__ico path {
+  animation: unit-draw 1.2s var(--ease-out) calc(var(--o, 0) * 1.2s) both,
+             unit-pulse 3.4s ease-in-out calc(2.6s + var(--o, 0) * 1.7s) infinite;
+}
+.unit.is-drawn .unit__ico[data-build="along"] { animation: unit-slide 4.5s ease-in-out 2.6s infinite; }
+.unit.is-drawn .unit__ico[data-build="out"] { animation: unit-turn 7s ease-in-out 2.6s infinite; transform-origin: 50% 55%; }
+.unit.is-drawn .unit__ico[data-build="up"] { animation: unit-bob 5s ease-in-out 2.6s infinite; }
+@keyframes unit-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes unit-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+@keyframes unit-slide { 50% { transform: translate(7px, -4px); } }
+@keyframes unit-turn { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes unit-bob { 50% { transform: translateY(-4px); } }
 .unit p { font-size: 12px; line-height: 1.5; }
 .unit p b { display: block; font-family: var(--f-mono); text-transform: uppercase; font-size: 13px; margin-bottom: 4px; }
 .unit:hover { transform: translateY(-10px); background: #b8281d; }
-.unit:hover .unit__ico path, .unit:hover .unit__ico circle, .unit:hover .unit__ico ellipse { stroke-dasharray: 400; animation: draw 1.4s var(--ease) forwards; }
-@keyframes draw { from { stroke-dashoffset: 400; } to { stroke-dashoffset: 0; } }
 .board { padding-bottom: 20px; }
 .board img { background: #fff; width: 100%; }
 
@@ -733,7 +747,7 @@ body.lb-open .hud, body.lb-open .cursor { visibility: hidden; }
   .triptych, .units__grid, .langs__row { grid-template-columns: 1fr; }
   .lang { border-right: 0; padding-left: 0 !important; border-bottom: 1px solid rgba(0,0,0,.2); }
   .unit { min-height: 0; }
-  .unit__ico { width: 90px; flex: none; }
+  .unit__ico { max-height: 170px; }
   .xp summary { grid-template-columns: 1fr 24px; }
   .xp__yr { grid-column: 1; }
   .xp__org { grid-column: 1; }

@@ -848,6 +848,58 @@ function initProgram() {
 }
 
 /* ------------------------------------------------------------------ */
+/* GRID 808 component library: the panel's own drawings, drawn in      */
+/* ------------------------------------------------------------------ */
+const UNIT_WIDEST = 520;   // widest drawing on the board, in its pixels: all icons share the panel's scale
+
+// stagger each outline (--o, 0..1) in the direction the unit works in
+function orderUnitPaths(svg, mode) {
+  const paths = $$('path', svg);
+  const c = paths.map((p) => { const b = p.getBBox(); return [b.x + b.width / 2, b.y + b.height / 2]; });
+  const mx = c.reduce((s, p) => s + p[0], 0) / c.length;
+  const my = c.reduce((s, p) => s + p[1], 0) / c.length;
+  let key = (p) => -p[1];                                     // up: from the base
+  if (mode === 'out') key = (p) => Math.hypot(p[0] - mx, p[1] - my);
+  else if (mode === 'diag') key = (p) => p[0] * 0.4 - p[1];   // heat lifting off the grilles
+  else if (mode === 'along') {
+    // the connector's long axis (principal direction of its outlines), left to right
+    let sxx = 0, syy = 0, sxy = 0;
+    c.forEach(([x, y]) => { sxx += (x - mx) ** 2; syy += (y - my) ** 2; sxy += (x - mx) * (y - my); });
+    const a = 0.5 * Math.atan2(2 * sxy, sxx - syy);
+    const ux = Math.abs(Math.cos(a)), uy = Math.sin(a) * Math.sign(Math.cos(a) || 1);
+    key = (p) => p[0] * ux + p[1] * uy;
+  }
+  const k = c.map(key);
+  const lo = Math.min(...k), hi = Math.max(...k);
+  paths.forEach((p, i) => p.style.setProperty('--o', ((k[i] - lo) / (hi - lo || 1)).toFixed(3)));
+}
+
+function initUnits() {
+  $$('.unit').forEach((card) => {
+    const img = $('img.unit__ico', card);
+    if (!img) return;
+    // inline the drawing so each outline can be animated (the <img> stays if this fails)
+    fetch(img.getAttribute('src')).then((r) => r.text()).then((txt) => {
+      const svg = new DOMParser().parseFromString(txt, 'image/svg+xml').documentElement;
+      if (svg.nodeName !== 'svg') return;
+      svg.classList.add('unit__ico');
+      svg.dataset.build = img.dataset.build;
+      svg.setAttribute('aria-hidden', 'true');
+      img.replaceWith(svg);
+      svg.style.setProperty('--w', Math.min(1, svg.viewBox.baseVal.width / UNIT_WIDEST).toFixed(3));
+      orderUnitPaths(svg, svg.dataset.build);
+    }).catch(() => {});
+    // drawn in when first seen; pointing at the card draws it again
+    ScrollTrigger.create({ trigger: card, start: 'top 85%', once: true, onEnter: () => card.classList.add('is-drawn') });
+    card.addEventListener('pointerenter', () => {
+      card.classList.remove('is-drawn');
+      void card.offsetWidth;
+      card.classList.add('is-drawn');
+    });
+  });
+}
+
+/* ------------------------------------------------------------------ */
 /* tilt cards                                                          */
 /* ------------------------------------------------------------------ */
 function initTilt() {
@@ -1290,6 +1342,7 @@ document.fonts.ready.then(() => {
   initCycle();
   initProgram();
   initTilt();
+  initUnits();
   initMarquees();
   initPano();
   initField();
