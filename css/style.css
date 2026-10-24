@@ -182,8 +182,6 @@ body.menu-open .menu-overlay { clip-path: inset(0 0 0 0); }
 .hero__years { writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--f-px); font-size: clamp(16px, 1.6vw, 24px); color: var(--fg); }
 .hero__ticks { list-style: none; display: flex; flex-direction: column; gap: 22px; }
 .hero__ticks li { width: 26px; height: 2px; background: var(--fg); transform: skewY(-30deg); opacity: .85; }
-.hero__brief { position: absolute; right: calc(var(--gutter) + clamp(120px, 12vw, 190px)); top: 120px; max-width: 280px; font-size: 13px; color: var(--fg-dim); z-index: 2; }
-.hero__brief strong { color: var(--fg); font-weight: 500; }
 .hero__hint { position: absolute; left: 50%; bottom: 72px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 2; pointer-events: none; }
 .hero__hint .px { font-size: 10px; color: var(--fg-dim); }
 .hero__hint-line { width: 1.5px; height: 46px; background: linear-gradient(var(--fg), transparent); animation: hint 2.2s var(--ease) infinite; transform-origin: top; }
@@ -702,7 +700,6 @@ body.lb-open .hud, body.lb-open .cursor { visibility: hidden; }
 
 /* =============== RESPONSIVE =============== */
 @media (max-width: 1100px) {
-  .hero__brief { display: none; }
   .p-meta { grid-template-columns: 1fr 1fr; max-width: 46vw; }
   .units__grid { grid-template-columns: repeat(3, 1fr); }
   .cards--4, .sol-grid, .veg__grid { grid-template-columns: repeat(2, 1fr); }

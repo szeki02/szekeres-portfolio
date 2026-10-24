@@ -201,7 +201,7 @@ function intro() {
     }, '-=0.6');
   if (hero) tl.to(hero.intro, { v: 1, duration: 2.6, ease: 'expo.out' }, '-=1.0');
   tl.from(heroChars, { yPercent: 115, duration: 1.4, stagger: 0.03 }, '-=2.4')
-    .from('.hero__role, .hero__brief, .hero__contact, .hero__hint', { opacity: 0, y: 20, duration: 1, stagger: 0.08 }, '-=1.2')
+    .from('.hero__role, .hero__contact, .hero__hint', { opacity: 0, y: 20, duration: 1, stagger: 0.08 }, '-=1.2')
     .from('.hero__vertical, .hero__years', { opacity: 0, x: 30, duration: 1.2, stagger: 0.1 }, '<')
     .from('.hero__ticks li', { scaleX: 0, transformOrigin: 'right', duration: 0.8, stagger: 0.04 }, '<')
     .from('.hero .mark', { scale: 0, rotate: 90, duration: 1, stagger: 0.06 }, '<')
@@ -328,7 +328,7 @@ function initHeroScroll() {
     onEnterBack: () => { heroSt.a = true; sync(); },
   });
   // measured from the page top: with the pinned hero itself as trigger these resolved to after the pin
-  gsap.to('.hero__side, .hero__contact, .hero__brief, .hero__hint', { opacity: 0, ease: 'none', scrollTrigger: { start: 0, end: () => window.innerHeight * 0.35, scrub: true, invalidateOnRefresh: true } });
+  gsap.to('.hero__side, .hero__contact, .hero__hint', { opacity: 0, ease: 'none', scrollTrigger: { start: 0, end: () => window.innerHeight * 0.35, scrub: true, invalidateOnRefresh: true } });
   gsap.to('.hero__name', { opacity: 0.18, ease: 'none', scrollTrigger: { start: 0, end: () => window.innerHeight, scrub: true, invalidateOnRefresh: true } });
 
   ScrollTrigger.create({
